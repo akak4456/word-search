@@ -1,1 +1,6 @@
 @import "reset.css";
+
+body {
+  background-color: #faffe4;
+  margin: 10px 60px 10px 60px;
+}
