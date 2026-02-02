@@ -9,15 +9,15 @@
 
 <style>
   footer {
-    color: #f6f6f6;
+    color: var(--white-text-color);
     text-align: center;
-    background: #555;
+    background: var(--footer-background);
     padding: 40px;
     margin-top: 18px;
   }
   footer a,
   footer span {
-    color: #f6f6f6;
+    color: var(--white-text-color);
     text-underline-position: under;
     margin: 12px;
     line-height: 28px;

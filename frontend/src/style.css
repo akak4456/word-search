@@ -1,5 +1,12 @@
 @import "reset.css";
 
+:root {
+  --normal-text-color: #444;
+  --white-text-color: #f6f6f6;
+  --footer-background: #555;
+  --desc-background: #fffffe;
+  --desc-border-color: #8bc34a;
+}
 body {
   background-color: #faffe4;
 }

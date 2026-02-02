@@ -52,7 +52,7 @@
   }
   #puz-img {
     text-align: center;
-    color: #f6f6f6;
+    color: var(--white-text-color);
     background: teal;
     margin: 0;
     padding: 6px;
@@ -65,9 +65,9 @@
     width: 100%;
     height: auto;
     padding: 26px;
-    color: #555;
-    background-color: #fffffe;
-    border: 1px solid #8bc34a;
+    color: var(--footer-background);
+    background-color: var(--desc-background);
+    border: 1px solid var(--desc-border-color);
   }
   #desc h1 {
     font-weight: bold;
@@ -84,9 +84,9 @@
   }
 
   #content {
-    background-color: #fffffe;
-    border: 1px solid #8bc34a;
-    color: #555;
+    background-color: var(--desc-background);
+    border: 1px solid var(--desc-border-color);
+    color: var(--footer-background);
     margin-top: 18px;
     margin-left: 60px;
     margin-right: 60px;

@@ -38,13 +38,13 @@
     cursor: pointer;
   }
   .home-btn:hover {
-    background-color: #444;
+    background-color: var(--normal-text-color);
   }
   .home-btn__img img {
     width: 30px;
   }
   .home-btn__desc {
-    color: #444;
+    color: var(--normal-text-color);
     margin-left: 8px;
     font-size: 18px;
   }
