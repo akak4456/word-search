@@ -1,1 +1,74 @@
-<main>Home</main>
+<script>
+  import wordSearchPuzzle from "../assets/word-search-puzzle.png";
+</script>
+
+<main>
+  <div id="top">
+    <div id="puz-img">
+      <img src={wordSearchPuzzle} alt="word-search-puzzle" />
+      <p>Thousands ready to play online</p>
+    </div>
+    <div id="desc">
+      <h1>Word Search</h1>
+      <p>
+        We have the best collection of word search puzzles online, with new ones
+        being added regularly.
+      </p>
+      <p>
+        They are fun to play, but also educational, in fact, many teachers make
+        use of them.
+      </p>
+      <p>
+        Puzzles are 100% free to play and work on desktop pc, mac, mobile and
+        tablet. Or you can go old school and print them to enjoy offline later.
+      </p>
+      <p>
+        Plus, if you're feeling a little more adventurous, why not create your
+        very own with our simple to use Word Search Maker, and then share them
+        with your friends.
+      </p>
+      <p>
+        To get started playing, just select a game from below. Best of luck.
+      </p>
+    </div>
+  </div>
+</main>
+
+<style>
+  #top {
+    display: flex;
+    margin-top: 18px;
+  }
+  #puz-img {
+    text-align: center;
+    color: #f6f6f6;
+    background: teal;
+    margin: 0;
+    padding: 6px;
+  }
+  #puz-img p {
+    padding: 18px 0 18px 0;
+  }
+
+  #desc {
+    width: 100%;
+    height: auto;
+    padding: 26px;
+    color: #555;
+    background-color: #fffffe;
+    border: 1px solid #8bc34a;
+  }
+  #desc h1 {
+    font-weight: bold;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  #desc p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  #desc p:nth-of-type(1) {
+    font-weight: bold;
+  }
+</style>
