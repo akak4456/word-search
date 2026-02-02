@@ -5,54 +5,56 @@
     playable on-line as well as easily printed, so you can share it with
     friends. Instructions are available at the bottom of this page
   </p>
-  <div id="title">
-    <label for="title">Title</label>
-    <input type="text" id="title" />
-  </div>
-  <div id="description">
-    <label for="description">Description</label>
-    <textarea></textarea>
-  </div>
-  <div id="wordlist">
-    <label for="word">Word List</label>
-    <p class="word-list-p">
-      Between 10 and 30 words. Puzzles are randomly generated using a selection
-      of your words at play time.
-    </p>
-    <div id="wordlist-input">
-      <div class="word"><input type="text" id="word" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
-      <div class="word"><input type="text" /></div>
+  <form>
+    <div id="title">
+      <label for="title">Title</label>
+      <input type="text" id="title" />
     </div>
-  </div>
-  <button id="submit">Submit</button>
+    <div id="description">
+      <label for="description">Description</label>
+      <textarea></textarea>
+    </div>
+    <div id="wordlist">
+      <label for="word">Word List</label>
+      <p class="word-list-p">
+        Between 10 and 30 words. Puzzles are randomly generated using a
+        selection of your words at play time.
+      </p>
+      <div id="wordlist-input">
+        <div class="word"><input type="text" id="word" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" /></div>
+      </div>
+    </div>
+    <button id="submit">Submit</button>
+  </form>
 </main>
 
 <style>
