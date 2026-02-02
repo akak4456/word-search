@@ -4,9 +4,9 @@
 </script>
 
 <header>
-  <div>
+  <button class="logo-btn" on:click={(window.location.hash = "/")}>
     <img src={wordSearchTitle} alt="word-search-title" />
-  </div>
+  </button>
   <nav>
     <button class="home-btn" on:click={(window.location.hash = "/")}>
       <div class="home-btn__img">
@@ -25,6 +25,10 @@
     justify-content: space-between;
     align-items: center;
     padding-bottom: 18px;
+  }
+
+  .logo-btn {
+    cursor: pointer;
   }
   .home-btn {
     display: flex;
