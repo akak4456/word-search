@@ -24,6 +24,7 @@
     justify-content: space-between;
     align-items: center;
     padding-bottom: 18px;
+    margin: 10px 60px 0 60px;
   }
 
   .logo-btn {
