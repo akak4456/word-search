@@ -32,6 +32,15 @@
       </p>
     </div>
   </div>
+  <div id="content">
+    <h1>PUZZLES</h1>
+    <ul>
+      <li>word search 1</li>
+      <li>word search 2</li>
+      <li>word search 3</li>
+      <li>word search 4</li>
+    </ul>
+  </div>
 </main>
 
 <style>
@@ -70,5 +79,27 @@
   }
   #desc p:nth-of-type(1) {
     font-weight: bold;
+  }
+
+  #content {
+    background-color: #fffffe;
+    border: 1px solid #8bc34a;
+    color: #555;
+    margin-top: 18px;
+  }
+  #content h1 {
+    color: red;
+    font-weight: bold;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-left: 3px;
+    margin-bottom: 10px;
+  }
+  #content ul {
+    padding-left: 30px;
+    list-style: disc;
+  }
+  #content li {
+    padding: 10px;
   }
 </style>
