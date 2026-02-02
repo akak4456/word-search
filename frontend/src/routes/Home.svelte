@@ -47,6 +47,8 @@
   #top {
     display: flex;
     margin-top: 18px;
+    margin-left: 60px;
+    margin-right: 60px;
   }
   #puz-img {
     text-align: center;
@@ -86,6 +88,8 @@
     border: 1px solid #8bc34a;
     color: #555;
     margin-top: 18px;
+    margin-left: 60px;
+    margin-right: 60px;
   }
   #content h1 {
     color: red;
