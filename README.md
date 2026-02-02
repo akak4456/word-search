@@ -26,6 +26,9 @@ word search 게임입니다.
 
 ## 구현 요구사항
 
+- 모든 페이지는 SPA로 동작한다. (React, Svelte 등 웹프레임워크 사용 가능)
+- 클라이언트 라우팅을 위한 라이브러리를 사용해도 된다 (React-router-dom, svelte-spa-router 등)
+- path에 따라 다른 화면을 보여주도록 라우팅을 구현한다.
 - Python의 fastAPI를 사용한다.
 - SQLite를 사용한다.
 - ERD를 이용해 데이터 모델링을 수행하고, 깃허브 README에 업로드한다
