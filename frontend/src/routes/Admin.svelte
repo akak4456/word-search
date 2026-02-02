@@ -8,11 +8,11 @@
   <form>
     <div id="title">
       <label for="title">Title</label>
-      <input type="text" id="title" />
+      <input type="text" id="title" name="title" />
     </div>
     <div id="description">
       <label for="description">Description</label>
-      <textarea></textarea>
+      <textarea id="description" name="description"></textarea>
     </div>
     <div id="wordlist">
       <label for="word">Word List</label>
@@ -21,36 +21,36 @@
         selection of your words at play time.
       </p>
       <div id="wordlist-input">
-        <div class="word"><input type="text" id="word" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
-        <div class="word"><input type="text" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
+        <div class="word"><input type="text" name="words" /></div>
       </div>
     </div>
     <button id="submit">Submit</button>
