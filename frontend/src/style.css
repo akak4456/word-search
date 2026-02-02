@@ -1,11 +1,14 @@
 @import "reset.css";
 
 :root {
+  --input-text-color: #222;
   --normal-text-color: #444;
   --white-text-color: #f6f6f6;
   --footer-background: #555;
   --desc-background: #fffffe;
   --desc-border-color: #8bc34a;
+  --gray-color: #ccc;
+  --submit-background: #ffc107;
 }
 body {
   background-color: #faffe4;
