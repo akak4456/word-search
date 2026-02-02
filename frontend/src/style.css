@@ -9,6 +9,8 @@
   --desc-border-color: #8bc34a;
   --gray-color: #ccc;
   --submit-background: #ffc107;
+  --err-text-color: #f3f3f3;
+  --err-background: #ce3505;
 }
 body {
   background-color: #faffe4;

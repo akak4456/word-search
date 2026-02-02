@@ -1,3 +1,56 @@
+<script>
+  let title = "";
+  let description = "";
+
+  // 기본 30개 생성
+  let words = Array(30).fill("");
+
+  async function handleSubmit() {
+    let isPossible = true;
+    if (title === "") {
+      const titleErr = document.querySelector("#title .fErr");
+      titleErr.style.display = "block";
+      isPossible = false;
+    } else {
+      const titleErr = document.querySelector("#title .fErr");
+      titleErr.style.display = "none";
+    }
+    if (description === "") {
+      const descErr = document.querySelector("#description .fErr");
+      descErr.style.display = "block";
+      isPossible = false;
+    } else {
+      const descErr = document.querySelector("#description .fErr");
+      descErr.style.display = "none";
+    }
+    const filteredWords = words.map((w) => w.trim()).filter((w) => w !== "");
+    if (filteredWords.length < 10) {
+      const wordlistErr = document.querySelector("#wordlist .fErr");
+      wordlistErr.style.display = "block";
+      isPossible = false;
+    } else {
+      const wordlistErr = document.querySelector("#wordlist .fErr");
+      wordlistErr.style.display = "none";
+    }
+    if (!isPossible) return;
+
+    const response = await fetch("http://127.0.0.1:8000/puzzles", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        description,
+        words: filteredWords,
+      }),
+    });
+
+    const result = await response.json();
+    console.log(result);
+  }
+</script>
+
 <main>
   <p>
     Make your own word search game on any topic you like, simply by providing
@@ -5,14 +58,16 @@
     playable on-line as well as easily printed, so you can share it with
     friends. Instructions are available at the bottom of this page
   </p>
-  <form>
+  <form on:submit|preventDefault={handleSubmit}>
     <div id="title">
       <label for="title">Title</label>
-      <input type="text" id="title" name="title" />
+      <input type="text" id="title" bind:value={title} />
+      <div class="fErr"><b>↪</b> Title is required</div>
     </div>
     <div id="description">
       <label for="description">Description</label>
-      <textarea id="description" name="description"></textarea>
+      <textarea id="description" bind:value={description}></textarea>
+      <div class="fErr"><b>↪</b> Description is required</div>
     </div>
     <div id="wordlist">
       <label for="word">Word List</label>
@@ -21,37 +76,13 @@
         selection of your words at play time.
       </p>
       <div id="wordlist-input">
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
-        <div class="word"><input type="text" name="words" /></div>
+        {#each words as word, index}
+          <div class="word">
+            <input type="text" bind:value={words[index]} />
+          </div>
+        {/each}
       </div>
+      <div class="fErr"><b>↪</b> At least 10 words are required</div>
     </div>
     <button id="submit">Submit</button>
   </form>
@@ -135,5 +166,18 @@
     padding: 18px;
     font-size: 1.4em;
     font-weight: 700;
+  }
+
+  .fErr {
+    color: var(--err-text-color);
+    background: var(--err-background);
+    padding: 0 4px;
+    font-size: 0.8em;
+    line-height: 2.4em;
+    display: none;
+  }
+  .fErr b {
+    color: var(--submit-background);
+    padding: 0 6px;
   }
 </style>
