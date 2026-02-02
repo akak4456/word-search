@@ -19,7 +19,6 @@
 
 <style>
   header {
-    margin: 18px 18px 0;
     border-bottom: 4px solid teal;
     display: flex;
     justify-content: space-between;
