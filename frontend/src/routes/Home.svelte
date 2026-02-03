@@ -1,5 +1,13 @@
 <script>
+  import { onMount } from "svelte";
   import wordSearchPuzzle from "../assets/word-search-puzzle.png";
+
+  let puzzles = [];
+
+  onMount(async () => {
+    const res = await fetch("http://localhost:8000/puzzles");
+    puzzles = await res.json();
+  });
 </script>
 
 <main>
@@ -35,10 +43,9 @@
   <div id="content">
     <h1>PUZZLES</h1>
     <ul>
-      <li>word search 1</li>
-      <li>word search 2</li>
-      <li>word search 3</li>
-      <li>word search 4</li>
+      {#each puzzles as puzzle}
+        <li><a href="">{puzzle.title}</a></li>
+      {/each}
     </ul>
   </div>
 </main>
@@ -105,5 +112,11 @@
   }
   #content li {
     padding: 10px;
+  }
+  #content a {
+    text-decoration: none;
+  }
+  #content a:visited {
+    color: var(--footer-background);
   }
 </style>

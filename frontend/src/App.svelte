@@ -4,9 +4,11 @@
   import Home from "./routes/Home.svelte";
   import Admin from "./routes/Admin.svelte";
   import Footer from "./components/Footer.svelte";
+  import Puzzle from "./routes/Puzzle.svelte";
   const routes = {
     "/": Home,
     "/admin": Admin,
+    "/puzzle/:id": Puzzle,
   };
 </script>
 

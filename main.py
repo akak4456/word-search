@@ -24,6 +24,58 @@ class PuzzleCreate(BaseModel):
     title: str
     description: str
     words: List[str]
+    
+@app.get("/puzzles")
+async def get_puzzles():
+    cur.execute("""
+        SELECT id, title, description
+        FROM word_search_puzzle
+    """)
+    rows = cur.fetchall()
+
+    puzzles = []
+    for row in rows:
+        puzzles.append({
+            "id": row[0],
+            "title": row[1],
+            "description": row[2]
+        })
+
+    return puzzles
+
+@app.get("/puzzles/{puzzle_id}")
+async def get_puzzle(puzzle_id: int):
+    cur.execute(
+        """
+        SELECT 
+            p.id,
+            p.title,
+            p.description,
+            w.word
+        FROM word_search_puzzle p
+        LEFT JOIN word_search_puzzle_list w
+            ON p.id = w.puzzle_id
+        WHERE p.id = ?
+        """,
+        (puzzle_id,)
+    )
+
+    rows = cur.fetchall()
+
+    if not rows:
+        return {"error": "Puzzle not found"}
+
+    # 첫 row에서 기본 정보 추출
+    puzzle_info = rows[0]
+
+    words = [row[3] for row in rows if row[3] is not None]
+
+    return {
+        "id": puzzle_info[0],
+        "title": puzzle_info[1],
+        "description": puzzle_info[2],
+        "words": words
+    }
 
 @app.post("/puzzles")
 async def create_puzzle(data: PuzzleCreate):
