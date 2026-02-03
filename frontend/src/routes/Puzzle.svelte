@@ -365,8 +365,10 @@
       </div>
     </div>
   </div>
-
-  <p>{puzzle.description}</p>
+  <div id="description">
+    <h1>Description</h1>
+    <p>{puzzle.description}</p>
+  </div>
 {/if}
 
 <style>
@@ -446,5 +448,22 @@
   .solved-box {
     border: 3px solid green;
     background-color: rgba(0, 200, 0, 0.25);
+  }
+
+  #description {
+    margin-top: 60px;
+    margin-left: 60px;
+    margin-right: 60px;
+  }
+
+  #description h1 {
+    color: var(--description-color);
+    font-weight: bold;
+    font-size: 25px;
+    border-bottom: 1px solid black;
+    display: inline;
+  }
+  #description p {
+    margin-top: 10px;
   }
 </style>
