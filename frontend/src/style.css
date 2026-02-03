@@ -11,6 +11,8 @@
   --submit-background: #ffc107;
   --err-text-color: #f3f3f3;
   --err-background: #ce3505;
+  --highlight-color: #ffcd9b;
+  --highlight-border: #ff9933;
 }
 body {
   background-color: #faffe4;
