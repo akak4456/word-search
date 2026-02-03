@@ -44,7 +44,7 @@
     <h1>PUZZLES</h1>
     <ul>
       {#each puzzles as puzzle}
-        <li><a href="">{puzzle.title}</a></li>
+        <li><a href="/#/puzzle/{puzzle.id}">{puzzle.title}</a></li>
       {/each}
     </ul>
   </div>
@@ -115,6 +115,7 @@
   }
   #content a {
     text-decoration: none;
+    color: var(--footer-background);
   }
   #content a:visited {
     color: var(--footer-background);
