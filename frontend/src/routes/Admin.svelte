@@ -47,7 +47,11 @@
     });
 
     const result = await response.json();
-    console.log(result);
+    if (result === "200") {
+      alert("퍼즐 추가가 완료되었습니다.");
+    } else {
+      alert("퍼즐 추가가 모종의 이유로 추가되지 않았습니다.");
+    }
   }
 </script>
 
