@@ -30,3 +30,31 @@ word search 게임입니다.
 - SQLite를 사용한다.
 - ERD를 이용해 데이터 모델링을 수행하고, 깃허브 README에 업로드한다
 - web socket을 이용하여 현황판의 데이터를 실시간으로 업데이트하도록 구현한다.
+
+## erd
+
+![ERD Diagram](erd.png)
+
+## 실행방법
+
+### 프론트엔드 실행방법
+
+```
+cd frontend
+npm run dev
+```
+
+### 백엔드 실행방법
+
+```
+python -m uvicorn main:app --reload
+```
+
+## 사이트맵
+
+"/": Home 페이지
+"/login": Login 페이지
+"/signup": Signup 페이지
+"/admin": Admin 페이지
+"/my": My 페이지
+"/puzzle/:id": Puzzle 페이지
