@@ -16,6 +16,7 @@
 
   const cellSize = 50; // 현재 cell 크기
   let gameStarted = false;
+  let gameFinished = false;
 
   $: if (startPoint && currentPoint) {
     const dx = currentPoint.x - startPoint.x;
@@ -139,7 +140,7 @@
   };
 
   function startSelection(e) {
-    if (!gameStarted) return;
+    if (!gameStarted || gameFinished) return;
     selecting = true;
 
     const rect = e.currentTarget.getBoundingClientRect();
@@ -153,7 +154,7 @@
   }
 
   function handleMouseMove(e) {
-    if (!selecting || !gameStarted) return;
+    if (!selecting || !gameStarted || gameFinished) return;
 
     currentPoint = {
       x: e.clientX,
@@ -178,7 +179,7 @@
   }
 
   function calculateSelection() {
-    if (!startCell || !currentCell || !gameStarted) return;
+    if (!startCell || !currentCell || !gameStarted || gameFinished) return;
 
     const dr = currentCell.row - startCell.row;
     const dc = currentCell.col - startCell.col;
@@ -242,13 +243,14 @@
 
       // 🔥 Svelte 반응성 강제 업데이트
       mappedWord = [...mappedWord];
+
       return true;
     }
     return false;
   }
 
   function addSolvedRect() {
-    if (!startCell || !currentCell || !gameStarted) return;
+    if (!startCell || !currentCell || !gameStarted || gameFinished) return;
 
     const grid = document.querySelector(".grid");
     const gridRect = grid.getBoundingClientRect();
@@ -279,6 +281,11 @@
     };
 
     solvedRects = [...solvedRects, rect];
+
+    const allSolved = mappedWord.every((mw) => mw.isSolved);
+    if (allSolved) {
+      gameFinished = true;
+    }
   }
 
   onMount(async () => {
@@ -359,6 +366,13 @@
                 </div>
               </div>
             {/if}
+            {#if gameFinished}
+              <div class="start-overlay">
+                <div class="start-box">
+                  <h2>GAME FINISH</h2>
+                </div>
+              </div>
+            {/if}
           </div>
         </div>
         <ul>
@@ -366,7 +380,7 @@
             <li
               class:solved={mw.isSolved}
               on:click={() => {
-                if (gameStarted) {
+                if (gameStarted || !gameFinished) {
                   highlighted = { row: mw.startRow, col: mw.startCol };
                 }
               }}
