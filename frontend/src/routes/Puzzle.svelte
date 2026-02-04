@@ -357,6 +357,20 @@
 
     return `${mm}:${ss}`;
   }
+
+  $: rankedPlayers = Object.entries(players)
+    .map(([userId, state]) => {
+      const solvedCount = state.mappedWord
+        ? state.mappedWord.filter((w) => w.isSolved).length
+        : 0;
+
+      return {
+        userId,
+        ...state,
+        solvedCount,
+      };
+    })
+    .sort((a, b) => b.solvedCount - a.solvedCount); // 많이 푼 사람이 1등
 </script>
 
 {#if loading}
@@ -461,14 +475,15 @@
         </ul>
       </div>
       <div id="pRight">
-        {#each Object.entries(players) as [userId, state]}
+        {#each rankedPlayers as player, index}
           <div class="player-box">
-            <h3>{userId}</h3>
-            <p>Time: {formatTime(state.elapsedTime)}</p>
-            <p>
-              Solved:
-              {state.mappedWord.filter((w) => w.isSolved).length}
-            </p>
+            <span class="rank rank-{index}">
+              {index + 1}
+            </span>
+
+            <h3>{player.userId}</h3>
+            <p>Solved: {player.solvedCount}</p>
+            <p>Time: {formatTime(player.elapsedTime)}</p>
           </div>
         {/each}
       </div>
@@ -610,5 +625,22 @@
     background-color: var(--highlight-color);
     cursor: pointer;
     font-weight: bold;
+  }
+
+  .rank {
+    font-weight: bold;
+    margin-right: 8px;
+  }
+
+  .rank-0 {
+    color: gold;
+  }
+
+  .rank-1 {
+    color: silver;
+  }
+
+  .rank-2 {
+    color: #cd7f32; /* bronze */
   }
 </style>
