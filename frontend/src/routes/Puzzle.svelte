@@ -23,6 +23,9 @@
   let elapsedTime = 0;
   let timerInterval = null;
 
+  let socket;
+  let players = {};
+
   $: if (startPoint && currentPoint) {
     const dx = currentPoint.x - startPoint.x;
     const dy = currentPoint.y - startPoint.y;
@@ -140,6 +143,17 @@
     return board;
   };
 
+  function sendUpdate() {
+    if (!socket) return;
+
+    socket.send(
+      JSON.stringify({
+        mappedWord: mappedWord,
+        elapsedTime: elapsedTime,
+      }),
+    );
+  }
+
   const gameSetup = () => {
     gameStarted = true;
 
@@ -147,7 +161,16 @@
 
     timerInterval = setInterval(() => {
       elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+      sendUpdate();
     }, 1000);
+
+    const userId = localStorage.getItem("id");
+
+    socket = new WebSocket(`ws://127.0.0.1:8000/ws/${params.id}/${userId}`);
+
+    socket.onmessage = (event) => {
+      players = JSON.parse(event.data);
+    };
   };
 
   function startSelection(e) {
@@ -266,6 +289,10 @@
     endTime = Date.now();
 
     clearInterval(timerInterval);
+
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.close();
+    }
   }
 
   function addSolvedRect() {
@@ -320,6 +347,16 @@
       .padStart(2, "0") +
     ":" +
     (elapsedTime % 60).toString().padStart(2, "0");
+
+  function formatTime(seconds) {
+    const mm = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
+
+    const ss = (seconds % 60).toString().padStart(2, "0");
+
+    return `${mm}:${ss}`;
+  }
 </script>
 
 {#if loading}
@@ -423,6 +460,18 @@
           {/each}
         </ul>
       </div>
+      <div id="pRight">
+        {#each Object.entries(players) as [userId, state]}
+          <div class="player-box">
+            <h3>{userId}</h3>
+            <p>Time: {formatTime(state.elapsedTime)}</p>
+            <p>
+              Solved:
+              {state.mappedWord.filter((w) => w.isSolved).length}
+            </p>
+          </div>
+        {/each}
+      </div>
     </div>
   </div>
   <div id="description">
@@ -445,6 +494,8 @@
 
   #pGame {
     margin-top: 18px;
+    display: flex;
+    justify-content: space-between;
   }
 
   #pLeft {

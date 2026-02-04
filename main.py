@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import List
@@ -179,3 +179,58 @@ def login(user: UserLogin):
     access_token = create_access_token({"sub": user.id})
 
     return {"access_token": access_token}
+
+class ConnectionManager:
+    def __init__(self):
+        # puzzle_id 별로 관리
+        self.rooms: Dict[str, List[WebSocket]] = {}
+        self.user_states: Dict[str, Dict[str, dict]] = {}
+        # 구조:
+        # {
+        #   "1": {
+        #        "userA": { mappedWord: [...], elapsedTime: 10 }
+        #   }
+        # }
+
+    async def connect(self, puzzle_id: str, user_id: str, websocket: WebSocket):
+        await websocket.accept()
+
+        if puzzle_id not in self.rooms:
+            self.rooms[puzzle_id] = []
+            self.user_states[puzzle_id] = {}
+
+        self.rooms[puzzle_id].append(websocket)
+
+        self.user_states[puzzle_id][user_id] = {
+            "mappedWord": [],
+            "elapsedTime": 0
+        }
+
+    def disconnect(self, puzzle_id: str, user_id: str, websocket: WebSocket):
+        self.rooms[puzzle_id].remove(websocket)
+        del self.user_states[puzzle_id][user_id]
+
+    async def broadcast(self, puzzle_id: str):
+        for connection in self.rooms[puzzle_id]:
+            await connection.send_json(self.user_states[puzzle_id])
+
+
+manager = ConnectionManager()
+
+@app.websocket("/ws/{puzzle_id}/{user_id}")
+async def websocket_endpoint(websocket: WebSocket, puzzle_id: str, user_id: str):
+    await manager.connect(puzzle_id, user_id, websocket)
+
+    try:
+        while True:
+            data = await websocket.receive_json()
+
+            # 클라이언트가 보낸 상태 업데이트
+            manager.user_states[puzzle_id][user_id] = data
+
+            # 모든 유저에게 broadcast
+            await manager.broadcast(puzzle_id)
+
+    except WebSocketDisconnect:
+        manager.disconnect(puzzle_id, user_id, websocket)
+        await manager.broadcast(puzzle_id)
