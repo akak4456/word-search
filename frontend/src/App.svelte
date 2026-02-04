@@ -15,7 +15,7 @@
     "/signup": Signup,
     "/admin": Admin,
     "/my": protectedRoute(My),
-    "/puzzle/:id": Puzzle,
+    "/puzzle/:id": protectedRoute(Puzzle),
   };
 </script>
 
