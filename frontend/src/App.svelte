@@ -8,9 +8,11 @@
   import My from "./routes/My.svelte";
   import { protectedRoute } from "./lib/protected";
   import Login from "./routes/Login.svelte";
+  import Signup from "./routes/Signup.svelte";
   const routes = {
     "/": Home,
     "/login": Login,
+    "/signup": Signup,
     "/admin": Admin,
     "/my": protectedRoute(My),
     "/puzzle/:id": Puzzle,
