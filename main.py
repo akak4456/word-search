@@ -5,17 +5,29 @@ from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 import sqlite3
 from passlib.context import CryptContext
+from jose import JWTError, jwt
+from datetime import datetime, timedelta
 
 pwd_context = CryptContext(
     schemes=["argon2"],
     deprecated="auto"
 )
 
+SECRET_KEY = "super-secret"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
+
 def hash_password(password: str):
     return pwd_context.hash(password)
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
+
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 con = sqlite3.connect("db.db",check_same_thread=False)
 cur = con.cursor()
@@ -39,6 +51,10 @@ class PuzzleCreate(BaseModel):
     words: List[str]
     
 class UserCreate(BaseModel):
+    id: str
+    password: str
+
+class UserLogin(BaseModel):
     id: str
     password: str
     
@@ -148,3 +164,18 @@ def check_id(id: str):
     if user:
         return {"available": False}
     return {"available": True}
+
+@app.post("/login")
+def login(user: UserLogin):
+    cur.execute("SELECT * FROM users WHERE id = ?", (user.id,))
+    db_user = cur.fetchone()
+
+    if not db_user:
+        return JSONResponse(status_code=400, content={"message": "존재하지 않는 사용자"})
+
+    if not verify_password(user.password, db_user[1]):
+        return JSONResponse(status_code=400, content={"message": "비밀번호 오류"})
+
+    access_token = create_access_token({"sub": user.id})
+
+    return {"access_token": access_token}

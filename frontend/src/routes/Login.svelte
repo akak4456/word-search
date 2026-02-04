@@ -1,8 +1,26 @@
 <script>
   let id = "";
   let password = "";
-  function handleSubmit() {
-    console.log("submit");
+  async function handleSubmit() {
+    const res = await fetch("http://localhost:8000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        password,
+      }),
+    });
+
+    if (res.status === 200) {
+      const data = await res.json();
+
+      localStorage.setItem("token", data.access_token);
+      window.location.hash = "/";
+    } else {
+      alert("로그인에 실패했습니다.");
+    }
   }
 </script>
 
@@ -16,7 +34,7 @@
     </div>
     <div id="password">
       <label for="password">Password</label>
-      <input type="text" id="password" bind:value={password} />
+      <input type="password" id="password" bind:value={password} />
       <div class="fErr"><b>↪</b> Password is required</div>
     </div>
     <button id="submit">Login</button>
