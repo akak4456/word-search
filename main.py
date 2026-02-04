@@ -1,8 +1,21 @@
 from fastapi import FastAPI, Form
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 import sqlite3
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(
+    schemes=["argon2"],
+    deprecated="auto"
+)
+
+def hash_password(password: str):
+    return pwd_context.hash(password)
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
 
 con = sqlite3.connect("db.db",check_same_thread=False)
 cur = con.cursor()
@@ -24,6 +37,10 @@ class PuzzleCreate(BaseModel):
     title: str
     description: str
     words: List[str]
+    
+class UserCreate(BaseModel):
+    id: str
+    password: str
     
 @app.get("/puzzles")
 async def get_puzzles():
@@ -104,3 +121,30 @@ async def create_puzzle(data: PuzzleCreate):
 
     con.commit()
     return "200"
+
+@app.post("/signup")
+def signup(user: UserCreate):
+    hashed_pw = hash_password(user.password)
+
+    try:
+        cur.execute(
+            "INSERT INTO users (id, password) VALUES (?, ?)",
+            (user.id, hashed_pw)
+        )
+        con.commit()
+    except sqlite3.IntegrityError:
+        return JSONResponse(
+            status_code=400,
+            content={"message": "이미 존재하는 아이디입니다."}
+        )
+
+    return {"message": "회원가입 완료"}
+
+@app.get("/users/check-id/{id}")
+def check_id(id: str):
+    cur.execute("SELECT id FROM users WHERE id = ?", (id,))
+    user = cur.fetchone()
+
+    if user:
+        return {"available": False}
+    return {"available": True}

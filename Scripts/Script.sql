@@ -11,3 +11,8 @@ CREATE TABLE word_search_puzzle_list (
         REFERENCES word_search_puzzle(id)
         ON DELETE CASCADE
 );
+
+CREATE TABLE users (
+	id TEXT PRIMARY KEY,
+	password TEXT PRIMARY KEY
+)
