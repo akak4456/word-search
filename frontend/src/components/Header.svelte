@@ -1,6 +1,7 @@
 <script>
   import wordSearchTitle from "../assets/word-search-title.png";
   import home from "../assets/home.svg";
+  import my from "../assets/my.svg";
 </script>
 
 <header>
@@ -8,11 +9,17 @@
     <img src={wordSearchTitle} alt="word-search-title" />
   </button>
   <nav>
-    <button class="home-btn" on:click={(window.location.hash = "/")}>
-      <div class="home-btn__img">
+    <button class="btn" on:click={(window.location.hash = "/my")}>
+      <div class="btn__img">
+        <img src={my} alt="my" />
+      </div>
+      <div class="btn__desc">My Page</div>
+    </button>
+    <button class="btn" on:click={(window.location.hash = "/")}>
+      <div class="btn__img">
         <img src={home} alt="home" />
       </div>
-      <div class="home-btn__desc">More Puzzles</div>
+      <div class="btn__desc">More Puzzles</div>
     </button>
   </nav>
 </header>
@@ -30,25 +37,29 @@
   .logo-btn {
     cursor: pointer;
   }
-  .home-btn {
+  nav {
+    display: flex;
+    gap: 10px;
+  }
+  .btn {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 8px;
     cursor: pointer;
   }
-  .home-btn:hover {
+  .btn:hover {
     background-color: var(--normal-text-color);
   }
-  .home-btn__img img {
+  .btn__img img {
     width: 30px;
   }
-  .home-btn__desc {
+  .btn__desc {
     color: var(--normal-text-color);
     margin-left: 8px;
     font-size: 18px;
   }
-  .home-btn:hover .home-btn__desc {
+  .btn:hover .btn__desc {
     color: white;
   }
 </style>
