@@ -52,9 +52,14 @@ python -m uvicorn main:app --reload
 
 ## 사이트맵
 
-"/": Home 페이지
-"/login": Login 페이지
-"/signup": Signup 페이지
-"/admin": Admin 페이지
-"/my": My 페이지
-"/puzzle/:id": Puzzle 페이지
+### "/": Home 페이지
+
+### "/login": Login 페이지
+
+### "/signup": Signup 페이지
+
+### "/admin": Admin 페이지
+
+### "/my": My 페이지
+
+### "/puzzle/:id": Puzzle 페이지
