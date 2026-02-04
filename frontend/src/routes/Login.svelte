@@ -17,6 +17,7 @@
       const data = await res.json();
 
       localStorage.setItem("token", data.access_token);
+      localStorage.setItem("id", id);
       window.location.hash = "/";
     } else {
       alert("로그인에 실패했습니다.");
