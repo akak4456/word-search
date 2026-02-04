@@ -18,6 +18,11 @@
   let gameStarted = false;
   let gameFinished = false;
 
+  let startTime = null;
+  let endTime = null;
+  let elapsedTime = 0;
+  let timerInterval = null;
+
   $: if (startPoint && currentPoint) {
     const dx = currentPoint.x - startPoint.x;
     const dy = currentPoint.y - startPoint.y;
@@ -137,6 +142,12 @@
 
   const gameSetup = () => {
     gameStarted = true;
+
+    startTime = Date.now();
+
+    timerInterval = setInterval(() => {
+      elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+    }, 1000);
   };
 
   function startSelection(e) {
@@ -249,6 +260,14 @@
     return false;
   }
 
+  function gameFinish() {
+    gameFinished = true;
+
+    endTime = Date.now();
+
+    clearInterval(timerInterval);
+  }
+
   function addSolvedRect() {
     if (!startCell || !currentCell || !gameStarted || gameFinished) return;
 
@@ -284,7 +303,7 @@
 
     const allSolved = mappedWord.every((mw) => mw.isSolved);
     if (allSolved) {
-      gameFinished = true;
+      gameFinish();
     }
   }
 
@@ -294,6 +313,13 @@
     board = generateBoard(puzzle.words);
     loading = false;
   });
+
+  $: formattedTime =
+    Math.floor(elapsedTime / 60)
+      .toString()
+      .padStart(2, "0") +
+    ":" +
+    (elapsedTime % 60).toString().padStart(2, "0");
 </script>
 
 {#if loading}
@@ -303,7 +329,14 @@
 {:else}
   <div id="puzzle">
     <div id="pTitle">
-      <h1>{puzzle.title}</h1>
+      <h1>
+        {puzzle.title}
+        {#if gameStarted}
+          <span class="timer">
+            ({formattedTime})
+          </span>
+        {/if}
+      </h1>
     </div>
     <div id="pGame">
       <div id="pLeft">
