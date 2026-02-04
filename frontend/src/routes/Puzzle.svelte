@@ -15,6 +15,7 @@
   let solvedRects = [];
 
   const cellSize = 50; // 현재 cell 크기
+  let gameStarted = false;
 
   $: if (startPoint && currentPoint) {
     const dx = currentPoint.x - startPoint.x;
@@ -134,10 +135,11 @@
   };
 
   const gameSetup = () => {
-    board = generateBoard(puzzle.words);
+    gameStarted = true;
   };
 
   function startSelection(e) {
+    if (!gameStarted) return;
     selecting = true;
 
     const rect = e.currentTarget.getBoundingClientRect();
@@ -151,7 +153,7 @@
   }
 
   function handleMouseMove(e) {
-    if (!selecting) return;
+    if (!selecting || !gameStarted) return;
 
     currentPoint = {
       x: e.clientX,
@@ -176,7 +178,7 @@
   }
 
   function calculateSelection() {
-    if (!startCell || !currentCell) return;
+    if (!startCell || !currentCell || !gameStarted) return;
 
     const dr = currentCell.row - startCell.row;
     const dc = currentCell.col - startCell.col;
@@ -246,7 +248,7 @@
   }
 
   function addSolvedRect() {
-    if (!startCell || !currentCell) return;
+    if (!startCell || !currentCell || !gameStarted) return;
 
     const grid = document.querySelector(".grid");
     const gridRect = grid.getBoundingClientRect();
@@ -282,7 +284,7 @@
   onMount(async () => {
     const res = await fetch(`http://127.0.0.1:8000/puzzles/${params.id}`);
     puzzle = await res.json();
-    gameSetup();
+    board = generateBoard(puzzle.words);
     loading = false;
   });
 </script>
@@ -349,14 +351,25 @@
                 {/each}
               </div>
             {/each}
+            {#if !gameStarted}
+              <div class="start-overlay">
+                <div class="start-box">
+                  <h2>READY TO PLAY</h2>
+                  <button on:click={gameSetup}> Begin </button>
+                </div>
+              </div>
+            {/if}
           </div>
         </div>
         <ul>
           {#each mappedWord as mw}
             <li
               class:solved={mw.isSolved}
-              on:click={() =>
-                (highlighted = { row: mw.startRow, col: mw.startCol })}
+              on:click={() => {
+                if (gameStarted) {
+                  highlighted = { row: mw.startRow, col: mw.startCol };
+                }
+              }}
             >
               {mw.word}
             </li>
@@ -465,5 +478,39 @@
   }
   #description p {
     margin-top: 10px;
+  }
+  .start-overlay {
+    position: absolute;
+    inset: 0; /* top:0 left:0 right:0 bottom:0 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    pointer-events: none; /* grid 클릭 막고 싶으면 auto로 변경 */
+  }
+
+  .start-box {
+    background: white;
+    padding: 40px 60px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    pointer-events: auto; /* 버튼은 클릭 가능하게 */
+  }
+
+  .start-box h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: var(--footer-background);
+  }
+
+  .start-box button {
+    padding: 12px 28px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--highlight-color);
+    cursor: pointer;
+    font-weight: bold;
   }
 </style>
